@@ -55,7 +55,7 @@
         android:layout_height="43dp"
         android:layout_margin="5dp"
         android:layout_marginTop="20dp"
-        android:text="Ammount:"
+        android:text="Amount:"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/posotita"
@@ -63,8 +63,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.039"
-        />
+        app:layout_constraintVertical_bias="0.039" />
 
     <Button
         android:id="@+id/button4"
@@ -83,24 +82,35 @@
         android:id="@+id/imageView3"
         android:layout_width="51dp"
         android:layout_height="48dp"
-        android:onClick="amount"
+        android:layout_marginEnd="32dp"
+        android:onClick="addProduct"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toStartOf="@+id/posotita"
-        app:layout_constraintHorizontal_bias="0.741"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:srcCompat="@drawable/ic_baseline_add_box_24" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="51dp"
+        android:layout_height="48dp"
+        android:onClick="removeProduct"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.498"
+        app:srcCompat="@drawable/minus_111123" />
 
     <TextView
         android:id="@+id/posotita"
         android:layout_width="59dp"
         android:layout_height="44dp"
+        android:layout_marginEnd="32dp"
         android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.492" />
 
     <TextView
         android:id="@+id/textView6"

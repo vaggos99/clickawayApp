@@ -82,7 +82,7 @@ public class MainActivity3 extends AppCompatActivity {
                          intent.putExtra("title",data.getTitle());
                          intent.putExtra("price",data.getPrice());
                          intent.putExtra("image",data.getImage());
-                         intent.putExtra("ammount",data.getAmmount());
+                         intent.putExtra("amount",data.getAmmount());
                          startActivity(intent);
 
                      }
@@ -93,28 +93,30 @@ public class MainActivity3 extends AppCompatActivity {
         prd_recycler.setAdapter(adapter);
 
 
-      FirebaseRecyclerAdapter<Data,ProductViewHolder2> adapter2 = new FirebaseRecyclerAdapter<Data, ProductViewHolder2>
+      FirebaseRecyclerAdapter<Data,ProductViewHolder> adapter2 = new FirebaseRecyclerAdapter<Data, ProductViewHolder>
               (
                       Data.class,
                       R.layout.product_data,
-                      ProductViewHolder2.class,
+                      ProductViewHolder.class,
                       reference2
               ) {
           @Override
-          protected void populateViewHolder(ProductViewHolder2 productViewHolder2, Data data, int i) {
+          protected void populateViewHolder(ProductViewHolder productViewHolder2, Data data, int i) {
               productViewHolder2.setTitle(data.getTitle());
               productViewHolder2.setPrice(data.getPrice());
               productViewHolder2.setImage(data.getImage());
-
+              productViewHolder2.setAmmount(data.getAmmount());
               productViewHolder2.mview.setOnClickListener(new View.OnClickListener()
               {
 
                   @Override
                   public void onClick(View v) {
                       Intent intent = new Intent(MainActivity3.this,TshirtsDetails.class);
+
                       intent.putExtra("title",data.getTitle());
                       intent.putExtra("price",data.getPrice());
                       intent.putExtra("image",data.getImage());
+                      intent.putExtra("amount",data.getAmmount());
                       startActivity(intent);
 
                   }
@@ -129,91 +131,9 @@ public class MainActivity3 extends AppCompatActivity {
       prd_recycler2.setAdapter(adapter2);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder
-    {
-       View mview;
 
 
-        public ProductViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mview=itemView;
-        }
 
-         public void setTitle(String title)
-         {
-             TextView mtitle = mview.findViewById(R.id.title);
-             mtitle.setText(title);
-         }
-
-        public void setAmmount(String ammount)
-        {
-            TextView am = mview.findViewById(R.id.ammount);
-            am.setText(ammount);
-        }
-
-        public void setPrice(String price)
-        {
-            TextView mtitle = mview.findViewById(R.id.price);
-            mtitle.setText(price);
-        }
-
-        public void setImage(String image)
-        {
-            ImageView mImage = mview.findViewById(R.id.imageView);
-            Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(mImage, new Callback() {
-                @Override
-                public void onSuccess() {
-
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Picasso.get().load(image).into(mImage);
-
-                }
-            });
-        }
-    }
-
-    public static class ProductViewHolder2 extends RecyclerView.ViewHolder
-    {
-        View mview;
-
-
-        public ProductViewHolder2(@NonNull View itemView) {
-            super(itemView);
-            mview=itemView;
-        }
-
-        public void setTitle(String title)
-        {
-            TextView mtitle = mview.findViewById(R.id.title);
-            mtitle.setText(title);
-        }
-
-        public void setPrice(String price)
-        {
-            TextView mtitle = mview.findViewById(R.id.price);
-            mtitle.setText(price);
-        }
-
-        public void setImage(String image)
-        {
-            ImageView mImage = mview.findViewById(R.id.imageView);
-            Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(mImage, new Callback() {
-                @Override
-                public void onSuccess() {
-
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Picasso.get().load(image).into(mImage);
-
-                }
-            });
-        }
-    }
     //αλλάζει activity
     private void updateUI(Class activity){
         Intent intent = new Intent(this,activity);

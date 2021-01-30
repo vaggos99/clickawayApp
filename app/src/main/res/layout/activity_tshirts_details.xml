@@ -78,7 +78,8 @@
         app:layout_constraintHorizontal_bias="0.836"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:srcCompat="@drawable/ic_baseline_add_box_24" />
+        app:srcCompat="@drawable/ic_baseline_add_box_24"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/posotita"

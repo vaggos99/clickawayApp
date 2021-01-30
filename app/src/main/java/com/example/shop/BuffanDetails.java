@@ -50,7 +50,7 @@ public class BuffanDetails extends AppCompatActivity {
         Intent intent = getIntent();
         String mtitle=intent.getStringExtra("title");
         String mprice=intent.getStringExtra("price");
-        String a=intent.getStringExtra("ammount");
+        String a=intent.getStringExtra("amount");
         String mimage=intent.getStringExtra("image");
 
         title.setText(mtitle);
@@ -78,12 +78,18 @@ public class BuffanDetails extends AppCompatActivity {
     {
         Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_LONG).show();
       
+    }
 
-}
-
-    public void amount(View view)
+    public void addProduct(View view)
     {
         count = count + 1;
+        String a = String.valueOf(count);
+        am.setText(a);
+
+    }
+    public void removeProduct(View view)
+    {
+        count = count - 1;
         String a = String.valueOf(count);
         am.setText(a);
 

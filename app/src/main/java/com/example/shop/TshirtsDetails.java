@@ -34,7 +34,7 @@ public class TshirtsDetails extends AppCompatActivity {
         String mtitle=intent.getStringExtra("title");
         String mprice=intent.getStringExtra("price");
         String mimage=intent.getStringExtra("image");
-
+        String a=intent.getStringExtra("amount");
         title.setText(mtitle);
         price.setText(mprice);
 

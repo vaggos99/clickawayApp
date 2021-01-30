@@ -1,11 +1,11 @@
 package Model;
 
 public class Data {
-     String title ;
-     String price ;
-     String image ;
-     String ammount;
-     String id ;
+     private String title ;
+     private String price ;
+    private String image ;
+    private String ammount;
+    private String id ;
 
     public Data()
     {
