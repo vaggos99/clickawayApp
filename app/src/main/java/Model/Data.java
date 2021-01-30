@@ -1,22 +1,23 @@
+
 package Model;
 
 public class Data {
-     private String title ;
-     private String price ;
-    private String image ;
-    private String ammount;
-    private String id ;
+    String title ;
+    String price ;
+    String image ;
+    String amount;
+    String id ;
 
     public Data()
     {
 
     }
 
-    public Data(String title, String price,String ammount, String image, String id) {
+    public Data(String title, String price,String amount, String image, String id) {
         this.title = title;
         this.price = price;
         this.image = image;
-        this.ammount=ammount;
+        this.amount=amount;
         this.id = id;
     }
 
@@ -28,8 +29,8 @@ public class Data {
         return price;
     }
 
-    public String getAmmount() {
-        return ammount;
+    public String getAmount() {
+        return amount;
     }
 
     public String getImage() {
@@ -48,8 +49,8 @@ public class Data {
         this.price = price;
     }
 
-    public void setAmmount(String ammount) {
-        this.ammount = ammount;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public void setImage(String image) {

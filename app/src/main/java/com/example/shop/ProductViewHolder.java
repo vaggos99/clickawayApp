@@ -27,10 +27,10 @@ public  class ProductViewHolder extends RecyclerView.ViewHolder
         mtitle.setText(title);
     }
 
-    public void setAmmount(String ammount)
+    public void setAmount(String amount)
     {
         TextView am = mview.findViewById(R.id.ammount);
-        am.setText(ammount);
+        am.setText(amount);
     }
 
     public void setPrice(String price)

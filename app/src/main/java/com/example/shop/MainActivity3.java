@@ -71,7 +71,7 @@ public class MainActivity3 extends AppCompatActivity {
                        productViewHolder.setTitle(data.getTitle());
                 productViewHolder.setPrice(data.getPrice());
                 productViewHolder.setImage(data.getImage());
-                productViewHolder.setAmmount(data.getAmmount());
+                productViewHolder.setAmount(data.getAmount());
 
                  productViewHolder.mview.setOnClickListener(new View.OnClickListener()
                  {
@@ -82,7 +82,11 @@ public class MainActivity3 extends AppCompatActivity {
                          intent.putExtra("title",data.getTitle());
                          intent.putExtra("price",data.getPrice());
                          intent.putExtra("image",data.getImage());
+<<<<<<< HEAD
                          intent.putExtra("amount",data.getAmmount());
+=======
+                         intent.putExtra("amount",data.getAmount());
+>>>>>>> 66e51014a43a35828112a3533591ab7b2f980e8e
                          startActivity(intent);
 
                      }
@@ -130,8 +134,6 @@ public class MainActivity3 extends AppCompatActivity {
 
       prd_recycler2.setAdapter(adapter2);
     }
-
-
 
 
     //αλλάζει activity

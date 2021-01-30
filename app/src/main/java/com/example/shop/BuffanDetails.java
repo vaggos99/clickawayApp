@@ -27,7 +27,7 @@ public class BuffanDetails extends AppCompatActivity {
     TextView title,price,posot,am;
     Button add;
     int count;
-    FirebaseDatabase db;
+     FirebaseDatabase db;
      DatabaseReference reference;
 
 
@@ -76,8 +76,12 @@ public class BuffanDetails extends AppCompatActivity {
 
     public void addToCart(View view)
     {
-        Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_LONG).show();
-      
+        Intent intent = getIntent();
+        String uid=intent.getStringExtra("id");
+        Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
+
+
+    }
     }
 
     public void addProduct(View view)
