@@ -71,7 +71,7 @@ public class MainActivity3 extends AppCompatActivity {
                        productViewHolder.setTitle(data.getTitle());
                 productViewHolder.setPrice(data.getPrice());
                 productViewHolder.setImage(data.getImage());
-                productViewHolder.setAmmount(data.getAmmount());
+                productViewHolder.setAmount(data.getAmount());
 
                  productViewHolder.mview.setOnClickListener(new View.OnClickListener()
                  {
@@ -82,7 +82,7 @@ public class MainActivity3 extends AppCompatActivity {
                          intent.putExtra("title",data.getTitle());
                          intent.putExtra("price",data.getPrice());
                          intent.putExtra("image",data.getImage());
-                         intent.putExtra("ammount",data.getAmmount());
+                         intent.putExtra("amount",data.getAmount());
                          startActivity(intent);
 
                      }
@@ -145,10 +145,10 @@ public class MainActivity3 extends AppCompatActivity {
              mtitle.setText(title);
          }
 
-        public void setAmmount(String ammount)
+        public void setAmount(String amount)
         {
             TextView am = mview.findViewById(R.id.ammount);
-            am.setText(ammount);
+            am.setText(amount);
         }
 
         public void setPrice(String price)
