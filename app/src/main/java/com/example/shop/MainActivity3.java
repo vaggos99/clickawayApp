@@ -82,11 +82,9 @@ public class MainActivity3 extends AppCompatActivity {
                          intent.putExtra("title",data.getTitle());
                          intent.putExtra("price",data.getPrice());
                          intent.putExtra("image",data.getImage());
-<<<<<<< HEAD
-                         intent.putExtra("amount",data.getAmmount());
-=======
+
                          intent.putExtra("amount",data.getAmount());
->>>>>>> 66e51014a43a35828112a3533591ab7b2f980e8e
+
                          startActivity(intent);
 
                      }
@@ -109,7 +107,7 @@ public class MainActivity3 extends AppCompatActivity {
               productViewHolder2.setTitle(data.getTitle());
               productViewHolder2.setPrice(data.getPrice());
               productViewHolder2.setImage(data.getImage());
-              productViewHolder2.setAmmount(data.getAmmount());
+              productViewHolder2.setAmount(data.getAmount());
               productViewHolder2.mview.setOnClickListener(new View.OnClickListener()
               {
 
@@ -120,7 +118,7 @@ public class MainActivity3 extends AppCompatActivity {
                       intent.putExtra("title",data.getTitle());
                       intent.putExtra("price",data.getPrice());
                       intent.putExtra("image",data.getImage());
-                      intent.putExtra("amount",data.getAmmount());
+                      intent.putExtra("amount",data.getAmount());
                       startActivity(intent);
 
                   }

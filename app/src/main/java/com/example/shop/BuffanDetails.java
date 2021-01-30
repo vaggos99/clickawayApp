@@ -82,7 +82,7 @@ public class BuffanDetails extends AppCompatActivity {
 
 
     }
-    }
+    
 
     public void addProduct(View view)
     {
