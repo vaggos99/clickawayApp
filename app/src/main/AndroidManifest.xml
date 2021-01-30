@@ -12,15 +12,16 @@
         <activity android:name=".CartActivity"></activity>
         <activity android:name=".TshirtsDetails" />
         <activity android:name=".BuffanDetails" />
-        <activity android:name=".MainActivity3" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".MainActivity3" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignupActivity"/>
+
     </application>
 
 </manifest>

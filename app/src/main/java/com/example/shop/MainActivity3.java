@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
@@ -25,21 +27,26 @@ public class MainActivity3 extends AppCompatActivity {
     private RecyclerView prd_recycler,prd_recycler2;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference,reference2;
-
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        mAuth = FirebaseAuth.getInstance();
+        //αν δεν είναι συνδεδεμένος πήγαινε στο login
+        if( mAuth.getCurrentUser()==null) {
+            updateUI(LoginActivity.class);
+            finish();
+        }
         prd_recycler = findViewById(R.id.recycler);
        prd_recycler2 = findViewById(R.id.recycler2);
 
 
-        LinearLayoutManager lm = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager lm = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         prd_recycler.setHasFixedSize(true);
         prd_recycler.setLayoutManager(lm);
 
-        LinearLayoutManager lm2 = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager lm2 = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         prd_recycler2.setHasFixedSize(true);
         prd_recycler2.setLayoutManager(lm2);
 
@@ -207,6 +214,12 @@ public class MainActivity3 extends AppCompatActivity {
             });
         }
     }
+    //αλλάζει activity
+    private void updateUI(Class activity){
+        Intent intent = new Intent(this,activity);
+        // intent.putExtra("stringKey1","Your message here!");
+        startActivity(intent);
 
+    }
 
 }
