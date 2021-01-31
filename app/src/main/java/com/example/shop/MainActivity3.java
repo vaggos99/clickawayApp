@@ -33,6 +33,7 @@ public class MainActivity3 extends AppCompatActivity {
     private DatabaseReference reference,reference2;
     private FirebaseAuth mAuth;
     private ArrayList<Order> orderList;
+    ArrayList<String> morder= new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,6 @@ public class MainActivity3 extends AppCompatActivity {
         }
         try{
         Bundle bundle = getIntent().getExtras();
-
         orderList = bundle.getParcelableArrayList("orderlist");
             for (Order item:orderList) {
                 System.out.println(item.getTitle());
@@ -113,7 +113,6 @@ public class MainActivity3 extends AppCompatActivity {
 
         prd_recycler.setAdapter(adapter);
 
-
       FirebaseRecyclerAdapter<Data,ProductViewHolder> adapter2 = new FirebaseRecyclerAdapter<Data, ProductViewHolder>
               (
                       Data.class,
@@ -156,7 +155,10 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
     public void gotocart(View view){
+        Intent intent2 = getIntent();
+        morder=intent2.getStringArrayListExtra("fl");
         Intent intent = new Intent(MainActivity3.this,CartActivity.class);
+        intent.putExtra("fullor",morder);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("orderlist", orderList);
         intent.putExtras(bundle);

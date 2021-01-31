@@ -42,6 +42,9 @@ public class BuffanDetails extends AppCompatActivity {
     private String mprice;
     private Order order;
     private ArrayList<Order> orderList=null;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,7 @@ public class BuffanDetails extends AppCompatActivity {
          mprice=intent.getStringExtra("price");
          a=intent.getStringExtra("amount");
          mimage=intent.getStringExtra("image");
+        // orderList = intent.getParcelableArrayListExtra("list");
 
         title.setText(mtitle);
         price.setText(mprice);
@@ -96,12 +100,14 @@ public class BuffanDetails extends AppCompatActivity {
         order.setAmount((String) am.getText());
         order.setPrice(String.valueOf(price));
         order.setTitle(mtitle);
+
         Intent intent2 = new Intent(getApplicationContext(),MainActivity3.class);
         Bundle bundle = new Bundle();
         orderList.add(order);
 
         bundle.putParcelableArrayList("orderlist",  orderList);
         intent2.putExtras(bundle);
+
         startActivity(intent2);
     }
 

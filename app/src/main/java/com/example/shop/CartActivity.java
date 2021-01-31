@@ -4,7 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,10 +24,19 @@ import Model.Order;
 
 public class CartActivity extends AppCompatActivity {
     private ArrayList<Order> orderList;
+    TextView total;
+    ListView list;
+    int productprice;
     private DatabaseReference myRef;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    ArrayList<String> m= new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+    String checkeditem;
+
+    int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +45,35 @@ public class CartActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         Bundle bundle = getIntent().getExtras();
+        list=findViewById(R.id.listView);
+        total = findViewById(R.id.textView5);
         orderList = bundle.getParcelableArrayList("orderlist");
         if (orderList.size()>0){
             Toast.makeText(getApplicationContext(), "list to buy", Toast.LENGTH_LONG).show();
         }
+        for (Order item:orderList)
+        {
+
+            String fullorder = item.getTitle() +" "+"x"+ item.getAmount() +" "+item.getPrice();
+            String[] arrSplit =fullorder.split(" ");
+            productprice = productprice + Integer.parseInt(arrSplit[arrSplit.length-1]);
+            m.add(fullorder);
+
+        }
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,m);
+        list.setAdapter(adapter);
+       total.setText(String.valueOf(productprice) + String.valueOf("$"));
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int p, long id)
+            {
+                p = list.getCheckedItemPosition();
+                 position = p;
+                 checkeditem = m.get(p).toString();
+            }
+        });
+
     }
 
    public void complete_purchase(View view){
@@ -51,7 +90,7 @@ public class CartActivity extends AppCompatActivity {
            i++;
        }
        Toast.makeText(getApplicationContext(), "Your order is completed", Toast.LENGTH_LONG).show();
-orderList.removeAll(orderList);
+      orderList.removeAll(orderList);
        Intent intent2 = new Intent(getApplicationContext(),MainActivity3.class);
        Bundle bundle = new Bundle();
 
@@ -59,4 +98,27 @@ orderList.removeAll(orderList);
        intent2.putExtras(bundle);
        startActivity(intent2);
    }
+
+   public void delete(View view)
+    {
+        String[] Split =checkeditem.split(" ");
+        int currentprice =  Integer.parseInt(Split[Split.length-1]);
+        productprice = productprice - currentprice;
+        total.setText(String.valueOf(productprice) + String.valueOf("$"));
+        m.remove(position);
+        orderList.remove(position);
+        adapter.notifyDataSetChanged();
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(getApplicationContext(),MainActivity3.class);
+            intent.putExtra("orderlist",orderList);
+            startActivity(intent);
+
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
