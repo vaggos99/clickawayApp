@@ -10,9 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shop">
         <activity android:name=".CartActivity"></activity>
-        <activity android:name=".TshirtsDetails" />
         <activity android:name=".BuffanDetails" />
-        <activity android:name=".SignupActivity" >
+        <activity android:name=".MainActivity3" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +19,7 @@
         </intent-filter>
     </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity3"/>
+        <activity android:name=".SignupActivity"/>
 
     </application>
 

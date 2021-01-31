@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +21,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import Model.Data;
+import Model.Order;
 
 public class MainActivity3 extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class MainActivity3 extends AppCompatActivity {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference,reference2;
     private FirebaseAuth mAuth;
+    private ArrayList<Order> orderList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,18 @@ public class MainActivity3 extends AppCompatActivity {
         if( mAuth.getCurrentUser()==null) {
             updateUI(LoginActivity.class);
             finish();
+        }
+        try{
+        Bundle bundle = getIntent().getExtras();
+
+        orderList = bundle.getParcelableArrayList("orderlist");
+            for (Order item:orderList) {
+                System.out.println(item.getTitle());
+
+            }
+        }
+        catch(java.lang.NullPointerException e){
+            orderList=new ArrayList<Order>();
         }
         prd_recycler = findViewById(R.id.recycler);
        prd_recycler2 = findViewById(R.id.recycler2);
@@ -84,7 +101,9 @@ public class MainActivity3 extends AppCompatActivity {
                          intent.putExtra("image",data.getImage());
 
                          intent.putExtra("amount",data.getAmount());
-
+                         Bundle bundle = new Bundle();
+                         bundle.putParcelableArrayList("orderlist", orderList);
+                         intent.putExtras(bundle);
                          startActivity(intent);
 
                      }
@@ -113,12 +132,15 @@ public class MainActivity3 extends AppCompatActivity {
 
                   @Override
                   public void onClick(View v) {
-                      Intent intent = new Intent(MainActivity3.this,TshirtsDetails.class);
+                      Intent intent = new Intent(MainActivity3.this,BuffanDetails.class);
 
                       intent.putExtra("title",data.getTitle());
                       intent.putExtra("price",data.getPrice());
                       intent.putExtra("image",data.getImage());
                       intent.putExtra("amount",data.getAmount());
+                      Bundle bundle = new Bundle();
+                      bundle.putParcelableArrayList("orderlist", orderList);
+                      intent.putExtras(bundle);
                       startActivity(intent);
 
                   }
@@ -133,7 +155,14 @@ public class MainActivity3 extends AppCompatActivity {
       prd_recycler2.setAdapter(adapter2);
     }
 
+    public void gotocart(View view){
+        Intent intent = new Intent(MainActivity3.this,CartActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("orderlist", orderList);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
+    }
     //αλλάζει activity
     private void updateUI(Class activity){
         Intent intent = new Intent(this,activity);

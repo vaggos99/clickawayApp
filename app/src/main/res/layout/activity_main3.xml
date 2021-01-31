@@ -15,6 +15,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageButton
+                android:layout_width="61dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:onClick="gotocart"
+                android:src="@drawable/shopping_shopping_cart_filled_icon" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -22,6 +28,7 @@
                 android:padding="10dp"
                 android:text="Buffans"
                 android:textAppearance="?android:textAppearanceLarge" />
+
 
 
             <androidx.recyclerview.widget.RecyclerView
