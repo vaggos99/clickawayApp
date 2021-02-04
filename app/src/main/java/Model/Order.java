@@ -8,7 +8,7 @@ public class Order implements Parcelable {
     private String price ;
     private  String image ;
     private String amount;
-
+    private String productId;
     public Order(){}
 
     public Order(Parcel in) {
@@ -16,6 +16,7 @@ public class Order implements Parcelable {
         price = in.readString();
         image = in.readString();
         amount = in.readString();
+        productId=in.readString();
     }
 
     @Override
@@ -24,6 +25,7 @@ public class Order implements Parcelable {
         dest.writeString(price);
         dest.writeString(image);
         dest.writeString(amount);
+        dest.writeString(productId);
     }
 
     @Override
@@ -73,5 +75,13 @@ public class Order implements Parcelable {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

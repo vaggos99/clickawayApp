@@ -1,9 +1,12 @@
 package com.example.shop;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,27 +17,34 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 import Model.Order;
 
 public class CartActivity extends AppCompatActivity {
     private ArrayList<Order> orderList;
-    TextView total;
-    ListView list;
-    int productprice;
+    private  TextView total;
+    private  ListView list;
+   private  int productprice;
     private DatabaseReference myRef;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    ArrayList<String> m= new ArrayList<String>();
-    ArrayAdapter<String> adapter;
-    String checkeditem;
-
+    private ArrayList<String> m= new ArrayList<String>();
+    private  ArrayAdapter<String> adapter;
+    private String checkeditem;
+    private Map<String, Integer> rest_amount ;
     int position;
 
     @Override
@@ -47,6 +57,7 @@ public class CartActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         list=findViewById(R.id.listView);
         total = findViewById(R.id.textView5);
+        rest_amount= (Map<String, Integer>) getIntent().getSerializableExtra("amountHash");
         orderList = bundle.getParcelableArrayList("orderlist");
         if (orderList.size()>0){
             Toast.makeText(getApplicationContext(), "list to buy", Toast.LENGTH_LONG).show();
@@ -86,14 +97,19 @@ public class CartActivity extends AppCompatActivity {
 
            myRef.child("Type").setValue(item.getTitle());
            myRef.child("Amount").setValue(item.getAmount());
-
+           String retStr = item.getProductId().substring(0, 1).toUpperCase() + item.getProductId().substring(1);
+           retStr = retStr.substring(0, retStr.length() - 1);
+           System.out.println(retStr);
+           myRef=database.getReference(retStr+"/"+item.getProductId());
+           myRef.child("amount").setValue(rest_amount.get(item.getProductId()).toString());
            i++;
        }
        Toast.makeText(getApplicationContext(), "Your order is completed", Toast.LENGTH_LONG).show();
       orderList.removeAll(orderList);
+       rest_amount.clear();
        Intent intent2 = new Intent(getApplicationContext(),MainActivity3.class);
        Bundle bundle = new Bundle();
-
+       intent2.putExtra("amountHash", (Serializable) rest_amount);
        bundle.putParcelableArrayList("orderlist",  orderList);
        intent2.putExtras(bundle);
        startActivity(intent2);
@@ -106,7 +122,10 @@ public class CartActivity extends AppCompatActivity {
         productprice = productprice - currentprice;
         total.setText(String.valueOf(productprice) + String.valueOf("$"));
         m.remove(position);
+        Order order=orderList.get(position);
+        rest_amount.put(order.getProductId(),rest_amount.get(order.getProductId())-Integer.parseInt(order.getAmount()));
         orderList.remove(position);
+
         adapter.notifyDataSetChanged();
     }
 
@@ -114,6 +133,7 @@ public class CartActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Intent intent = new Intent(getApplicationContext(),MainActivity3.class);
             intent.putExtra("orderlist",orderList);
+            intent.putExtra("amountHash", (Serializable) rest_amount);
             startActivity(intent);
 
             finish();

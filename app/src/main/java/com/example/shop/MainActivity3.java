@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import Model.Data;
 import Model.Order;
@@ -34,6 +38,7 @@ public class MainActivity3 extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ArrayList<Order> orderList;
     ArrayList<String> morder= new ArrayList<String>();
+    private Map<String, Integer> ret_amount ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +52,11 @@ public class MainActivity3 extends AppCompatActivity {
         try{
         Bundle bundle = getIntent().getExtras();
         orderList = bundle.getParcelableArrayList("orderlist");
-            for (Order item:orderList) {
-                System.out.println(item.getTitle());
-
-            }
+            ret_amount= (Map<String, Integer>) getIntent().getSerializableExtra("amountHash");
         }
         catch(java.lang.NullPointerException e){
             orderList=new ArrayList<Order>();
+            ret_amount=new HashMap<>();
         }
         prd_recycler = findViewById(R.id.recycler);
        prd_recycler2 = findViewById(R.id.recycler2);
@@ -99,10 +102,11 @@ public class MainActivity3 extends AppCompatActivity {
                          intent.putExtra("title",data.getTitle());
                          intent.putExtra("price",data.getPrice());
                          intent.putExtra("image",data.getImage());
-
                          intent.putExtra("amount",data.getAmount());
+                         intent.putExtra("productId",data.getId());
                          Bundle bundle = new Bundle();
                          bundle.putParcelableArrayList("orderlist", orderList);
+                         intent.putExtra("amountHash", (Serializable) ret_amount);
                          intent.putExtras(bundle);
                          startActivity(intent);
 
@@ -139,6 +143,7 @@ public class MainActivity3 extends AppCompatActivity {
                       intent.putExtra("amount",data.getAmount());
                       Bundle bundle = new Bundle();
                       bundle.putParcelableArrayList("orderlist", orderList);
+                      intent.putExtra("amountHash", (Serializable) ret_amount);
                       intent.putExtras(bundle);
                       startActivity(intent);
 
@@ -155,12 +160,11 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
     public void gotocart(View view){
-        Intent intent2 = getIntent();
-        morder=intent2.getStringArrayListExtra("fl");
+
         Intent intent = new Intent(MainActivity3.this,CartActivity.class);
-        intent.putExtra("fullor",morder);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("orderlist", orderList);
+        intent.putExtra("amountHash", (Serializable) ret_amount);
         intent.putExtras(bundle);
         startActivity(intent);
 
