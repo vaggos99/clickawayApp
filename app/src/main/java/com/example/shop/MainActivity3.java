@@ -48,8 +48,9 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
     private Map<String, Integer> ret_amount ;
     LocationManager managerl;
     Double x,y;
-    Double shop_x=38.0187;
-    Double shop_y=23.7373;
+    Double shop_x=38.0376;
+    Double shop_y=23.7396;
+    boolean aek = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +58,10 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
         managerl = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         mAuth = FirebaseAuth.getInstance();
         //αν δεν είναι συνδεδεμένος πήγαινε στο login
-        if (mAuth.getCurrentUser() == null) {
-            updateUI(LoginActivity.class);
-            finish();
-        }
+      //  if (mAuth.getCurrentUser() == null) {
+       //     updateUI(LoginActivity.class);
+       //     finish();
+      //  }
         try {
             Bundle bundle = getIntent().getExtras();
             orderList = bundle.getParcelableArrayList("orderlist");
@@ -199,16 +200,30 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
 
     }
 
+    public void informations(View view)
+    {
+        Intent intent = new Intent(MainActivity3.this,InfoActivity.class);
+        startActivity(intent);
+    }
+
+    public void logout(View view)
+    {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+
         x = location.getLatitude();
         y = location.getLongitude();
         Double apostasix = x-shop_x;
 
       Double apostasiy = y-shop_y;
-     if(apostasix<1 && apostasiy<1)
+     if(aek==true && apostasix<1 && apostasiy<1)
        {
+           aek=false;
           Toast.makeText(MainActivity3.this,"Your order is ready",Toast.LENGTH_SHORT).show();
       }
 

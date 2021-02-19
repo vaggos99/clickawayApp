@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Locale;
 
@@ -38,12 +47,16 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     ProgressBar bar;
     FirebaseAuth auth;
+    FirebaseFirestore store;
+    DatabaseReference myRef;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        store = FirebaseFirestore.getInstance();
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         text = findViewById(R.id.textView4);
         bu = findViewById(R.id.button2);
@@ -78,9 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("id", user_id);
                     editor.apply();
-                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity3.class));
-                    finish();
+                    check(user_id);
+                   // Toast.makeText(LoginActivity.this, "Login Successfully" , Toast.LENGTH_SHORT).show();
+                   // startActivity(new Intent(getApplicationContext(), MainActivity3.class));
+                   // finish();
 
                 } else {
                     Toast.makeText(getApplicationContext(),
@@ -90,6 +104,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+   public void check(String uid)
+    {
+        DocumentReference ref = store.collection("Users").document(uid);
+        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.getString("Type").equals("Owner"))
+                {
+                    startActivity(new Intent(getApplicationContext(), OwnerActivity.class));
+                    finish();
+                }
+                else
+                    {
+                        startActivity(new Intent(getApplicationContext(), MainActivity3.class));
+                        finish();
+                    }
+            }
+        });
+    }
+
 
     public void gotoregister(View view)
     {

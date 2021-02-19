@@ -52,6 +52,22 @@
                 android:layout_height="300dp">
             </androidx.recyclerview.widget.RecyclerView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_gravity="bottom"
+                android:onClick="informations"
+                android:text="See the informations"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="logout"
+                android:text="LOGOUT" />
+
         </LinearLayout>
 
 
