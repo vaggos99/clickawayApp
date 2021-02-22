@@ -26,4 +26,10 @@ public class OwnerActivity extends AppCompatActivity {
         finish();
     }
 
+    public void addProduct(View view)
+    {
+        startActivity(new Intent(getApplicationContext(), AddProductActivity.class));
+        finish();
+    }
+
 }
