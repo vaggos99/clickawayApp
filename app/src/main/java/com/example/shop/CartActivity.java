@@ -97,10 +97,10 @@ public class CartActivity extends AppCompatActivity {
 
            myRef.child("Type").setValue(item.getTitle());
            myRef.child("Amount").setValue(item.getAmount());
-           String retStr = item.getProductId().substring(0, 1).toUpperCase() + item.getProductId().substring(1);
-           retStr = retStr.substring(0, retStr.length() - 1);
-           System.out.println(retStr);
-           myRef=database.getReference(retStr+"/"+item.getProductId());
+
+
+
+           myRef=database.getReference(item.getProductId());
            myRef.child("amount").setValue(rest_amount.get(item.getProductId()).toString());
            i++;
        }

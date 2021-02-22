@@ -126,7 +126,8 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
                          intent.putExtra("price",data.getPrice());
                          intent.putExtra("image",data.getImage());
                          intent.putExtra("amount",data.getAmount());
-                         intent.putExtra("productId",data.getId());
+                         intent.putExtra("productId",reference.getKey()+"/"+data.getId());
+
                          Bundle bundle = new Bundle();
                          bundle.putParcelableArrayList("orderlist", orderList);
                          intent.putExtra("amountHash", (Serializable) ret_amount);
@@ -164,6 +165,7 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
                       intent.putExtra("price",data.getPrice());
                       intent.putExtra("image",data.getImage());
                       intent.putExtra("amount",data.getAmount());
+                      intent.putExtra("productId",reference2.getKey()+"/"+data.getId());
                       Bundle bundle = new Bundle();
                       bundle.putParcelableArrayList("orderlist", orderList);
                       intent.putExtra("amountHash", (Serializable) ret_amount);
