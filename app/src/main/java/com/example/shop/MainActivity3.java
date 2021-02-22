@@ -195,12 +195,12 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
 
     }
     //αλλάζει activity
-    private void updateUI(Class activity){
+  /*  private void updateUI(Class activity){
         Intent intent = new Intent(this,activity);
         // intent.putExtra("stringKey1","Your message here!");
         startActivity(intent);
 
-    }
+    } */
 
     public void informations(View view)
     {
