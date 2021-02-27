@@ -21,6 +21,14 @@
                 android:layout_gravity="top|right"
                 android:onClick="gotocart"
                 android:src="@drawable/shopping_shopping_cart_filled_icon" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="63dp"
+                android:layout_height="wrap_content"
+                android:onClick="logout"
+                app:icon="@drawable/logout" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,13 +68,6 @@
                 android:text="See the informations"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="logout"
-                android:text="LOGOUT" />
 
         </LinearLayout>
 

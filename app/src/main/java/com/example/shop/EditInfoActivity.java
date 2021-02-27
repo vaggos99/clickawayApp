@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 public class EditInfoActivity extends AppCompatActivity {
@@ -86,5 +88,15 @@ public class EditInfoActivity extends AppCompatActivity {
         }
         else Toast.makeText(EditInfoActivity.this,"Please complete all the fields!",Toast.LENGTH_SHORT).show();
     }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(getApplicationContext(),OwnerActivity.class);
 
+
+            startActivity(intent);
+
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

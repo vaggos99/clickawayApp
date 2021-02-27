@@ -210,6 +210,7 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
 
     public void logout(View view)
     {
+        mAuth.signOut();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
     }
