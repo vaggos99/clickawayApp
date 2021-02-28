@@ -89,34 +89,40 @@ public class CartActivity extends AppCompatActivity {
     }
 
    public void complete_purchase(View view){
-       String currentTime = Calendar.getInstance().getTime().toString();
-
-
-       int i=1;
-       for (Order item:orderList) {
-           myRef = database.getReference("Orders").child(user.getUid()).child(currentTime).child("item"+String.valueOf(i));
-
-           myRef.child("Type").setValue(item.getTitle());
-           myRef.child("Amount").setValue(item.getAmount());
-
-
-
-           myRef=database.getReference(item.getProductId());
-           myRef.child("amount").setValue(rest_amount.get(item.getProductId()).toString());
-           i++;
-       }
-       myRef = database.getReference("Orders").child(user.getUid()).child(currentTime);
        EditText name=findViewById(R.id.editTextTextPersonName6);
-       myRef.child("Name").setValue(name.getText().toString());
-       Toast.makeText(getApplicationContext(), "Your order is completed", Toast.LENGTH_LONG).show();
-      orderList.removeAll(orderList);
-       rest_amount.clear();
-       Intent intent2 = new Intent(getApplicationContext(),MainActivity3.class);
-       Bundle bundle = new Bundle();
-       intent2.putExtra("amountHash", (Serializable) rest_amount);
-       bundle.putParcelableArrayList("orderlist",  orderList);
-       intent2.putExtras(bundle);
-       startActivity(intent2);
+
+        if(name.getText()==null)
+            Toast.makeText(getApplicationContext(), "Your have to put your name", Toast.LENGTH_LONG).show();
+        else {
+            String currentTime = Calendar.getInstance().getTime().toString();
+
+
+            int i = 1;
+            for (Order item : orderList) {
+                myRef = database.getReference("Orders").child(user.getUid()).child(currentTime).child("item" + String.valueOf(i));
+
+                myRef.child("Type").setValue(item.getTitle());
+                myRef.child("Amount").setValue(item.getAmount());
+
+
+                myRef = database.getReference(item.getProductId());
+                myRef.child("amount").setValue(rest_amount.get(item.getProductId()).toString());
+                i++;
+            }
+            myRef = database.getReference("Orders").child(user.getUid()).child(currentTime);
+
+            myRef.child("Name").setValue(name.getText().toString());
+            myRef.child("Taken").setValue("false");
+            Toast.makeText(getApplicationContext(), "Your order is completed", Toast.LENGTH_LONG).show();
+            orderList.removeAll(orderList);
+            rest_amount.clear();
+            Intent intent2 = new Intent(getApplicationContext(), MainActivity3.class);
+            Bundle bundle = new Bundle();
+            intent2.putExtra("amountHash", (Serializable) rest_amount);
+            bundle.putParcelableArrayList("orderlist", orderList);
+            intent2.putExtras(bundle);
+            startActivity(intent2);
+        }
    }
 
    public void delete(View view)
@@ -129,7 +135,6 @@ public class CartActivity extends AppCompatActivity {
         Order order=orderList.get(position);
         rest_amount.put(order.getProductId(),rest_amount.get(order.getProductId())-Integer.parseInt(order.getAmount()));
         orderList.remove(position);
-
         adapter.notifyDataSetChanged();
     }
 

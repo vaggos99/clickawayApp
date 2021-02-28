@@ -57,7 +57,7 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
     Double x,y;
     Double shop_x=38.0376;
     Double shop_y=23.7396;
-    boolean aek = true;
+    boolean hasShown = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -233,10 +233,29 @@ else
         Double apostasix = x-shop_x;
 
       Double apostasiy = y-shop_y;
-     if(aek==true && apostasix<1 && apostasiy<1)
+     if(hasShown==true && apostasix<1 && apostasiy<1)
        {
-           aek=false;
-          Toast.makeText(MainActivity3.this,"Your order is ready",Toast.LENGTH_SHORT).show();
+
+           user = mAuth.getCurrentUser();
+           myRef=db.getReference("Orders").child(user.getUid());
+           myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                       for (DataSnapshot s : dataSnapshot.getChildren()) {
+                           boolean taken =Boolean.parseBoolean((String) s.child("Taken").getValue());
+                            if(!taken)
+                                Toast.makeText(MainActivity3.this,"Your order is ready",Toast.LENGTH_SHORT).show();
+                       }
+                   }
+               }
+               @Override
+               public void onCancelled(@NonNull DatabaseError error) {
+
+               }
+           });
+
+           hasShown=false;
       }
 
     }
@@ -301,4 +320,5 @@ else
                 .setMessage(message)
                 .show();
     }
+
 }
