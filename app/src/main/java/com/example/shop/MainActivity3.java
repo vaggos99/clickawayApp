@@ -242,11 +242,11 @@ else
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                       for (DataSnapshot s : dataSnapshot.getChildren()) {
-                           boolean taken =Boolean.parseBoolean((String) s.child("Taken").getValue());
+
+                           boolean taken =Boolean.parseBoolean((String) dataSnapshot.child("Taken").getValue());
                             if(!taken)
                                 Toast.makeText(MainActivity3.this,"Your order is ready",Toast.LENGTH_SHORT).show();
-                       }
+
                    }
                }
                @Override
@@ -284,17 +284,24 @@ else
                 StringBuilder builder = new StringBuilder();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String date=dataSnapshot.getKey();
+                    DataSnapshot name = dataSnapshot.child("Name");
+                    DataSnapshot taken = dataSnapshot.child("Taken");
                     builder.append("Date:").append(date).append("\n");
+                    builder.append("Name:").append(name.getValue(String.class)).append("\n");
+                    builder.append("Taken:").append(taken.getValue(String.class)).append("\n");
                     for (DataSnapshot s : dataSnapshot.getChildren()) {
-                        String item=s.getKey();
-                        DataSnapshot amount = s.child("Amount");
-                        DataSnapshot type = s.child("Type");
-                        DataSnapshot name = s.child("Name");
-                        builder.append(item).append("\n");
-                        builder.append("Name:").append(name.getValue(String.class)).append("\n");
-                        builder.append("Product:").append(type.getValue(String.class)).append("\n");
-                        builder.append("Amount:").append(amount.getValue(String.class)).append("\n\n");
 
+                        String item=s.getKey();
+
+                        if(item.substring(0, 4).equals("item")) {
+                            DataSnapshot amount = s.child("Amount");
+                            DataSnapshot type = s.child("Type");
+
+                            builder.append(item).append("\n");
+
+                            builder.append("Product:").append(type.getValue(String.class)).append("\n");
+                            builder.append("Amount:").append(amount.getValue(String.class)).append("\n\n");
+                        }
                     }
                     builder.append("----------------------\n");
                 }

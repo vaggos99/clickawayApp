@@ -91,7 +91,7 @@ public class CartActivity extends AppCompatActivity {
    public void complete_purchase(View view){
        EditText name=findViewById(R.id.editTextTextPersonName6);
 
-        if(name.getText()==null)
+        if(name.getText().toString()==null)
             Toast.makeText(getApplicationContext(), "Your have to put your name", Toast.LENGTH_LONG).show();
         else {
             String currentTime = Calendar.getInstance().getTime().toString();
