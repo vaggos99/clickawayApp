@@ -14,21 +14,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            <ImageButton
-                android:layout_width="61dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:onClick="gotocart"
-                android:src="@drawable/shopping_shopping_cart_filled_icon" />
+    <ImageButton
+        android:layout_width="61dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:onClick="gotocart"
+        android:src="@drawable/shopping_shopping_cart_filled_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="63dp"
-                android:layout_height="wrap_content"
-                android:onClick="logout"
-                app:icon="@drawable/logout" />
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="63dp"
+        android:layout_height="wrap_content"
+        android:onClick="logout"
+        app:icon="@drawable/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="informations"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showHistory"
+        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?android:attr/actionModeFindDrawable" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,15 +88,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp">
             </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:layout_gravity="bottom"
-                android:onClick="informations"
-                android:text="See the informations"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black" />
 
         </LinearLayout>
 

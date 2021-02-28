@@ -10,4 +10,7 @@
     <string name="language">Γλώσσα</string>
     <string name="change_title">Άλλαξε γλώσσα</string>
     <string name="complete_purchase">Ολοκλήρωσε την αγορά</string>
+    <string name="name">Όνομα</string>
+    <string name="my_orders">Οι παραγγελίες μου</string>
+    <string name="empty_cart">Το καλάθι σου είναι άδειο</string>
 </resources>

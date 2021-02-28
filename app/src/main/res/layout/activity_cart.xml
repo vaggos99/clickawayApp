@@ -61,11 +61,17 @@
         android:layout_width="34dp"
         android:layout_height="39dp"
         android:onClick="delete"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView"
-        app:layout_constraintVertical_bias="0.15"
         app:srcCompat="@drawable/ic_baseline_delete_24" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

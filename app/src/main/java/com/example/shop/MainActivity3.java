@@ -1,6 +1,7 @@
 package com.example.shop;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,8 +24,11 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -43,10 +47,13 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference,reference2;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private ArrayList<Order> orderList;
     ArrayList<String> morder= new ArrayList<String>();
     private Map<String, Integer> ret_amount ;
     LocationManager managerl;
+    private DatabaseReference myRef;
+
     Double x,y;
     Double shop_x=38.0376;
     Double shop_y=23.7396;
@@ -185,14 +192,16 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
     }
 
     public void gotocart(View view){
-
-        Intent intent = new Intent(MainActivity3.this,CartActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("orderlist", orderList);
-        intent.putExtra("amountHash", (Serializable) ret_amount);
-        intent.putExtras(bundle);
-        startActivity(intent);
-
+if(!orderList.isEmpty()) {
+    Intent intent = new Intent(MainActivity3.this, CartActivity.class);
+    Bundle bundle = new Bundle();
+    bundle.putParcelableArrayList("orderlist", orderList);
+    intent.putExtra("amountHash", (Serializable) ret_amount);
+    intent.putExtras(bundle);
+    startActivity(intent);
+}
+else
+    Toast.makeText(MainActivity3.this,"empty cart/άδειο καλάθι",Toast.LENGTH_SHORT).show();
     }
     //αλλάζει activity
   /*  private void updateUI(Class activity){
@@ -245,5 +254,51 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
     @Override
     public void onProviderDisabled(@NonNull String provider) {
 
+    }
+    //εμφάμιση ιστορικού μηνυμάτων
+    public void showHistory(View view){
+        user = mAuth.getCurrentUser();
+        myRef=db.getReference("Orders").child(user.getUid());
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                StringBuilder builder = new StringBuilder();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String date=dataSnapshot.getKey();
+                    builder.append("Date:").append(date).append("\n");
+                    for (DataSnapshot s : dataSnapshot.getChildren()) {
+                        String item=s.getKey();
+                        DataSnapshot amount = s.child("Amount");
+                        DataSnapshot type = s.child("Type");
+                        DataSnapshot name = s.child("Name");
+                        builder.append(item).append("\n");
+                        builder.append("Name:").append(name.getValue(String.class)).append("\n");
+                        builder.append("Product:").append(type.getValue(String.class)).append("\n");
+                        builder.append("Amount:").append(amount.getValue(String.class)).append("\n\n");
+
+                    }
+                    builder.append("----------------------\n");
+                }
+
+
+
+                showMessage(getString(R.string.my_orders),builder.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //μέθοδος για την εμφάνιση της βάσης
+    public void showMessage(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setCancelable(true)
+                .setTitle(title)
+                .setMessage(message)
+                .show();
     }
 }

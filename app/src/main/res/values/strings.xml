@@ -9,4 +9,7 @@
     <string name="language">Language</string>
     <string name="change_title">Change language</string>
     <string name="complete_purchase">Complete purchase</string>
+    <string name="name">Name</string>
+    <string name="my_orders">My orders</string>
+    <string name="empty_cart">Your cart is empty</string>
 </resources>

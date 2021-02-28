@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,6 +105,9 @@ public class CartActivity extends AppCompatActivity {
            myRef.child("amount").setValue(rest_amount.get(item.getProductId()).toString());
            i++;
        }
+       myRef = database.getReference("Orders").child(user.getUid()).child(currentTime);
+       EditText name=findViewById(R.id.editTextTextPersonName6);
+       myRef.child("Name").setValue(name.getText().toString());
        Toast.makeText(getApplicationContext(), "Your order is completed", Toast.LENGTH_LONG).show();
       orderList.removeAll(orderList);
        rest_amount.clear();
