@@ -12,4 +12,5 @@
     <string name="name">Name</string>
     <string name="my_orders">My orders</string>
     <string name="empty_cart">Your cart is empty</string>
+    <string name="notification">Your order is ready</string>
 </resources>

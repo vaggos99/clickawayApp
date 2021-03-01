@@ -1,19 +1,25 @@
 package com.example.shop;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -58,12 +64,14 @@ public class MainActivity3 extends AppCompatActivity implements LocationListener
     Double shop_x=38.0376;
     Double shop_y=23.7396;
     boolean hasShown = true;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         managerl = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         mAuth = FirebaseAuth.getInstance();
+        createNotificationChannel();
         //αν δεν είναι συνδεδεμένος πήγαινε στο login
       //  if (mAuth.getCurrentUser() == null) {
        //     updateUI(LoginActivity.class);
@@ -244,10 +252,15 @@ else
                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                            boolean taken =Boolean.parseBoolean((String) dataSnapshot.child("Taken").getValue());
-                            if(!taken)
-                                Toast.makeText(MainActivity3.this,"Your order is ready",Toast.LENGTH_SHORT).show();
-
-                   }
+                            if(!taken) {
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "lemubitA")
+                                        .setSmallIcon(R.drawable.notification_ic)
+                                        .setContentTitle(getString(R.string.notification))
+                                        .setContentText(getString(R.string.notification))
+                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                                NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(getApplicationContext());
+                                notificationManagerCompat.notify(100,builder.build());
+                            } }
                }
                @Override
                public void onCancelled(@NonNull DatabaseError error) {
@@ -288,7 +301,7 @@ else
                     DataSnapshot taken = dataSnapshot.child("Taken");
                     builder.append("Date:").append(date).append("\n");
                     builder.append("Name:").append(name.getValue(String.class)).append("\n");
-                    builder.append("Taken:").append(taken.getValue(String.class)).append("\n");
+                    builder.append("Taken:").append(taken.getValue(String.class)).append("\n\n");
                     for (DataSnapshot s : dataSnapshot.getChildren()) {
 
                         String item=s.getKey();
@@ -326,6 +339,23 @@ else
                 .setTitle(title)
                 .setMessage(message)
                 .show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.notification);
+            String description =getString(R.string.notification);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("lemubitA", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 }

@@ -13,4 +13,5 @@
     <string name="name">Όνομα</string>
     <string name="my_orders">Οι παραγγελίες μου</string>
     <string name="empty_cart">Το καλάθι σου είναι άδειο</string>
+    <string name="notification">Your order is ready</string>
 </resources>
