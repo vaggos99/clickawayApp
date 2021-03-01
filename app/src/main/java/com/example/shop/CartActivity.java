@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,6 +45,8 @@ public class CartActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private ArrayList<String> m= new ArrayList<String>();
+    SharedPreferences pref;
+    EditText name;
     private  ArrayAdapter<String> adapter;
     private String checkeditem;
     private Map<String, Integer> rest_amount ;
@@ -52,6 +56,9 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        name=findViewById(R.id.editTextTextPersonName6);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -86,10 +93,12 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+         name.setText( pref.getString("name", "null"));
+
     }
 
    public void complete_purchase(View view){
-       EditText name=findViewById(R.id.editTextTextPersonName6);
+
 
         if(name.getText().toString()==null)
             Toast.makeText(getApplicationContext(), "Your have to put your name", Toast.LENGTH_LONG).show();

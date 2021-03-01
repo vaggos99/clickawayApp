@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,19 +28,20 @@ import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText email,password;
+    EditText email,password,nm;
     Button b;
     TextView login;
     ProgressBar bar;
     FirebaseAuth auth;
     FirebaseFirestore store;
     RadioButton owner,user;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        nm=findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         b =findViewById(R.id.button);
@@ -48,12 +51,19 @@ public class SignupActivity extends AppCompatActivity {
         store = FirebaseFirestore.getInstance();
         owner = findViewById(R.id.radioButton);
         user = findViewById(R.id.radioButton2);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
     public void register(View view)
     {
         String e = email.getText().toString();
         String p = password.getText().toString();
+
+        if(e.isEmpty() || e==null )
+        {
+            Toast.makeText(SignupActivity.this,"Name is required",Toast.LENGTH_SHORT).show();
+        }
 
         if(e.isEmpty() || e==null )
         {
@@ -75,6 +85,11 @@ public class SignupActivity extends AppCompatActivity {
                 FirebaseUser usr = auth.getCurrentUser();
                 if(task.isSuccessful())
                 {
+
+                    String n = nm.getText().toString();
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("name", n);
+                    editor.apply();
                     if(owner.isChecked())
                     {
                         DocumentReference r = store.collection("Users").document(usr.getUid());
