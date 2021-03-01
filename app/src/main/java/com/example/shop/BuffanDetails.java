@@ -97,32 +97,37 @@ public class BuffanDetails extends AppCompatActivity {
 
     }
 
-    public void addToCart(View view)
-    {
-        int total_amount;
-        if (rest_amount.containsKey(id)){
-            total_amount=rest_amount.get(id);
+    public void addToCart(View view) {
+        String amount = am.getText().toString();
+        if(amount=="0")
+        {
+            Toast.makeText(BuffanDetails.this,"Select amount",Toast.LENGTH_SHORT).show();
         }
-        else
-            total_amount=Integer.parseInt(mamount);
-        int price=Integer.parseInt(  mprice.substring(0, mprice.length() - 1))*count;
-        //Intent intent = getIntent();
-        //String uid=intent.getStringExtra("id");
-        //Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
-        total_amount=total_amount-Integer.parseInt((String) am.getText());
-        rest_amount.put(id,total_amount);
-        order.setAmount((String) am.getText());
-        order.setPrice(String.valueOf(price));
-        order.setTitle(mtitle);
-        order.setProductId(id);
-        Intent intent2 = new Intent(getApplicationContext(),MainActivity3.class);
-        Bundle bundle = new Bundle();
-        orderList.add(order);
+        else{
+            int total_amount;
+            if (rest_amount.containsKey(id)) {
+                total_amount = rest_amount.get(id);
+            } else
+                total_amount = Integer.parseInt(mamount);
+            int price = Integer.parseInt(mprice.substring(0, mprice.length() - 1)) * count;
+            //Intent intent = getIntent();
+            //String uid=intent.getStringExtra("id");
+            //Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
+            total_amount = total_amount - Integer.parseInt((String) am.getText());
+            rest_amount.put(id, total_amount);
+            order.setAmount((String) am.getText());
+            order.setPrice(String.valueOf(price));
+            order.setTitle(mtitle);
+            order.setProductId(id);
+            Intent intent2 = new Intent(getApplicationContext(), MainActivity3.class);
+            Bundle bundle = new Bundle();
+            orderList.add(order);
 
-        bundle.putParcelableArrayList("orderlist",  orderList);
-        intent2.putExtras(bundle);
-        intent2.putExtra("amountHash", (Serializable) rest_amount);
-        startActivity(intent2);
+            bundle.putParcelableArrayList("orderlist", orderList);
+            intent2.putExtras(bundle);
+            intent2.putExtra("amountHash", (Serializable) rest_amount);
+            startActivity(intent2);
+        }
     }
 
 

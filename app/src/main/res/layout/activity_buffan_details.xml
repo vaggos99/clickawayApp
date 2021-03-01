@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Title"
+                android:text="@string/title"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/black" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Price"
+                android:text="@string/price"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/black" />
 
@@ -49,28 +49,12 @@
     </ScrollView>
 
 
-    <TextView
-        android:id="@+id/ammount"
-        android:layout_width="100dp"
-        android:layout_height="43dp"
-        android:layout_margin="5dp"
-        android:layout_marginTop="20dp"
-        android:text="Amount:"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/posotita"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.039" />
-
     <Button
         android:id="@+id/button4"
         android:layout_width="411dp"
         android:layout_height="50dp"
         android:onClick="addToCart"
-        android:text="ADD TO CART"
+        android:text="@string/addtocart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.437"
@@ -114,17 +98,16 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="84dp"
-        android:layout_height="37dp"
-        android:text="TextView"
+        android:layout_width="94dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="272dp"
+        android:text="Amount"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/posotita"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toEndOf="@+id/ammount"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

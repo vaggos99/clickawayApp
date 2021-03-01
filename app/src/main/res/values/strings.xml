@@ -13,4 +13,26 @@
     <string name="my_orders">My orders</string>
     <string name="empty_cart">Your cart is empty</string>
     <string name="notification">Your order is ready</string>
+    <string name="owner">Owner</string>
+    <string name="user">User</string>
+    <string name="buffans">Buffan</string>
+    <string name="tshirts">T-shirts</string>
+    <string name="info">See the informations</string>
+    <string name="logout">Logout</string>
+    <string name="title">Title</string>
+    <string name="amount">Amount</string>
+    <string name="price">Price</string>
+    <string name="edit">Edit the informations</string>
+    <string name="add">Add product</string>
+    <string name="nm">Name:</string>
+    <string name="address">Address:</string>
+    <string name="thl">Phone:</string>
+    <string name="infromation">Informations</string>
+    <string name="e">Edit</string>
+    <string name="total">Total</string>
+    <string name="addtocart">ADD TO CART</string>
+    <string name="prd_id">ProductId:</string>
+    <string name="type">Type:</string>
+    <string name="a">Add</string>
+
 </resources>

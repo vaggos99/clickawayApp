@@ -14,4 +14,25 @@
     <string name="my_orders">Οι παραγγελίες μου</string>
     <string name="empty_cart">Το καλάθι σου είναι άδειο</string>
     <string name="notification">Your order is ready</string>
+    <string name="owner">Ιδιοκτήτης</string>
+    <string name="user">Χρήστης</string>
+    <string name="buffans">Μπουφάν</string>
+    <string name="tshirts">Μπλουζάκια</string>
+    <string name="info">Δες τις πληροφορίες</string>
+    <string name="logout">Αποσύνδεση</string>
+    <string name="title">Τίτλος</string>
+    <string name="amount">Ποσότητα</string>
+    <string name="price">Τιμή</string>
+    <string name="edit">Επεξεργασία πληροφοριών</string>
+    <string name="add">Προσθήκη προιόντος</string>
+    <string name="nm">Ονομα:</string>
+    <string name="address">Διευθυνση:</string>
+    <string name="thl">Τηλ. Επικοινωνιας:</string>
+    <string name="infromation">Πληροφορίες</string>
+    <string name="e">Επεξεργασία</string>
+    <string name="total">Σύνολο</string>
+    <string name="addtocart">ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ</string>
+    <string name="prd_id">Κωδικός Προιόντος:</string>
+    <string name="type">Κατηγορία:</string>
+    <string name="a">Προσθήκη</string>
 </resources>

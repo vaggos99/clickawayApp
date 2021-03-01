@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:padding="10dp"
-                android:text="Buffans"
+                android:text="@string/buffans"
                 android:textAppearance="?android:textAppearanceLarge" />
 
 
@@ -79,7 +79,7 @@
                 android:layout_margin="10dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="t-shirts"
+                android:text="@string/tshirts"
                 android:padding="10dp"
                 android:textAppearance="?android:textAppearanceLarge" />
 
