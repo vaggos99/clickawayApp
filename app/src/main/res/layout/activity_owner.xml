@@ -41,4 +41,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logout" />
 
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="247dp"
+        android:layout_height="444dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

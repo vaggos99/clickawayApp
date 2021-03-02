@@ -252,6 +252,7 @@ else
            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   StringBuilder builder_s = new StringBuilder();
                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                            boolean taken =Boolean.parseBoolean((String) dataSnapshot.child("Taken").getValue());
@@ -263,7 +264,36 @@ else
                                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
                                 NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(getApplicationContext());
                                 notificationManagerCompat.notify(100,builder.build());
-                            } }
+
+                                String date=dataSnapshot.getKey();
+                                DataSnapshot name = dataSnapshot.child("Name");
+
+                                builder_s.append("Date:").append(date).append("\n");
+                                builder_s.append("Name:").append(name.getValue(String.class)).append("\n");
+
+
+                                for (DataSnapshot s : dataSnapshot.getChildren()) {
+
+                                    String item=s.getKey();
+
+                                    if(item.substring(0, 4).equals("item")) {
+                                        DataSnapshot amount = s.child("Amount");
+                                        DataSnapshot type = s.child("Type");
+
+                                        builder_s.append(item).append("\n");
+
+                                        builder_s.append("Product:").append(type.getValue(String.class)).append("\n");
+                                        builder_s.append("Amount:").append(amount.getValue(String.class)).append("\n\n");
+                                    }
+                                }
+
+                                builder_s.append("----------------------\n");
+
+                            }
+                   }
+
+                   myRef = db.getReference("message");
+                   myRef.setValue(builder_s);
                }
                @Override
                public void onCancelled(@NonNull DatabaseError error) {
