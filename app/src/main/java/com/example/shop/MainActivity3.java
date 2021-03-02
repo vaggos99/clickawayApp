@@ -239,10 +239,12 @@ else
 
         x = location.getLatitude();
         y = location.getLongitude();
-        Double apostasix = x-shop_x;
+        float[] resultArray = new float[99];
 
-      Double apostasiy = y-shop_y;
-     if(hasShown==true && apostasix<1 && apostasiy<1)
+        Location.distanceBetween(x, y, shop_x, shop_y, resultArray);
+
+
+     if(hasShown==true && resultArray[0]<500)
        {
 
            user = mAuth.getCurrentUser();
