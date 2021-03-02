@@ -34,5 +34,6 @@
     <string name="prd_id">ProductId:</string>
     <string name="type">Type:</string>
     <string name="a">Add</string>
+    <string name="phone">phone</string>
 
 </resources>

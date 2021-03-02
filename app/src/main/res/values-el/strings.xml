@@ -35,4 +35,5 @@
     <string name="prd_id">Κωδικός Προιόντος:</string>
     <string name="type">Κατηγορία:</string>
     <string name="a">Προσθήκη</string>
+    <string name="phone">τηλέφωνο</string>
 </resources>

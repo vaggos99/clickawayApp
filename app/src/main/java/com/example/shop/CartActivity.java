@@ -47,7 +47,7 @@ public class CartActivity extends AppCompatActivity {
     private FirebaseUser user;
     private ArrayList<String> m= new ArrayList<String>();
     SharedPreferences pref;
-    EditText name;
+    EditText name,phone;
     private  ArrayAdapter<String> adapter;
     private String checkeditem;
     private Map<String, Integer> rest_amount ;
@@ -59,6 +59,7 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         name=findViewById(R.id.editTextTextPersonName6);
+        phone=findViewById(R.id.editTextPhone);
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -101,8 +102,8 @@ public class CartActivity extends AppCompatActivity {
    public void complete_purchase(View view){
 
 
-        if(name.getText().toString()==null)
-            Toast.makeText(getApplicationContext(), "Your have to put your name", Toast.LENGTH_LONG).show();
+        if(name.getText().toString()==null||phone.getText().toString()==null)
+            Toast.makeText(getApplicationContext(), "You have to put your name and phone", Toast.LENGTH_LONG).show();
         else {
             String currentTime = Calendar.getInstance().getTime().toString();
 
@@ -122,6 +123,7 @@ public class CartActivity extends AppCompatActivity {
             myRef = database.getReference("Orders").child(user.getUid()).child(currentTime);
 
             myRef.child("Name").setValue(name.getText().toString());
+            myRef.child("Phone").setValue(phone.getText().toString());
             myRef.child("Taken").setValue("false");
             Toast.makeText(getApplicationContext(), "Your order is completed", Toast.LENGTH_LONG).show();
             orderList.removeAll(orderList);

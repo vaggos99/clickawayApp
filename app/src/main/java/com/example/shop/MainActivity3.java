@@ -293,7 +293,7 @@ else
                    }
 
                    myRef = db.getReference("message");
-                   myRef.setValue(builder_s);
+                   myRef.setValue(builder_s.toString());
                }
                @Override
                public void onCancelled(@NonNull DatabaseError error) {

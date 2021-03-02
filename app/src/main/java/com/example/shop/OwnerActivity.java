@@ -1,6 +1,7 @@
 package com.example.shop;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -61,5 +62,60 @@ public class OwnerActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), AddProductActivity.class));
         finish();
     }
+    public void showOrders(View view){
 
+        myRef=database.getReference("Orders");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                StringBuilder builder = new StringBuilder();
+                for (DataSnapshot datasnap : snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : datasnap.getChildren()) {
+                        boolean taken = Boolean.parseBoolean((String) dataSnapshot.child("Taken").getValue());
+                        if (!taken) {
+                            String date = dataSnapshot.getKey();
+                            DataSnapshot name = dataSnapshot.child("Name");
+
+                            builder.append("Date:").append(date).append("\n");
+                            builder.append("Name:").append(name.getValue(String.class)).append("\n\n");
+
+                            for (DataSnapshot s : dataSnapshot.getChildren()) {
+
+                                String item = s.getKey();
+
+                                if (item.substring(0, 4).equals("item")) {
+                                    DataSnapshot amount = s.child("Amount");
+                                    DataSnapshot type = s.child("Type");
+
+                                    builder.append(item).append("\n");
+
+                                    builder.append("Product:").append(type.getValue(String.class)).append("\n");
+                                    builder.append("Amount:").append(amount.getValue(String.class)).append("\n\n");
+                                }
+                            }
+                            builder.append("----------------------\n");
+                        }
+
+
+
+                    }
+                }
+                showMessage(getString(R.string.my_orders), builder.toString());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //μέθοδος για την εμφάνιση της βάσης
+    public void showMessage(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setCancelable(true)
+                .setTitle(title)
+                .setMessage(message)
+                .show();
+    }
 }
