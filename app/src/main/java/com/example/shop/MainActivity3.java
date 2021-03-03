@@ -321,14 +321,16 @@ else
     public void onProviderDisabled(@NonNull String provider) {
 
     }
-    //εμφάμιση ιστορικού μηνυμάτων
+    //εμφάμιση ιστορικού παραγγελιων
     public void showHistory(View view){
         user = mAuth.getCurrentUser();
         myRef=db.getReference("Orders").child(user.getUid());
+
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 StringBuilder builder = new StringBuilder();
+                builder.append("UID:").append(user.getUid()).append("\n");
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String date=dataSnapshot.getKey();
                     DataSnapshot name = dataSnapshot.child("Name");

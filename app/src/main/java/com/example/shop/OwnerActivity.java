@@ -36,6 +36,8 @@ public class OwnerActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 message.setText(message.getText().toString()+"\n"+snapshot.getValue(String.class));
+                String string = message.getText().toString();
+
             }
 
             @Override
@@ -50,12 +52,33 @@ public class OwnerActivity extends AppCompatActivity {
             myRef = database.getReference("Orders").child(uid.getText().toString()).child(date.getText().toString()).child("Taken");
             myRef.setValue("true");
             Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
-            uid.setText("");
-            date.setText("");
+            String string = message.getText().toString();
+            String[] parts = string.split("----------------------\n");
+            String new_message="";
+            for (String p:parts){
+                if(!p.contains(uid.getText())||!p.contains(date.getText().toString())){
+                    new_message+=p+"----------------------\n";
+                }
+            }
+            message.setText(new_message);
         }
         else
             Toast.makeText(getApplicationContext(), "You have to put UID and date of order", Toast.LENGTH_LONG).show();
     }
+
+    public void notTaken(View view)
+    {
+        if(uid.getText().toString()!=null && date.getText().toString()!=null) {
+            myRef = database.getReference("Orders").child(uid.getText().toString()).child(date.getText().toString()).child("Taken");
+            myRef.setValue("false");
+            Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
+        }
+        else
+            Toast.makeText(getApplicationContext(), "You have to put UID and date of order", Toast.LENGTH_LONG).show();
+    }
+
+
+
     public void edit(View view)
     {
         startActivity(new Intent(getApplicationContext(), EditInfoActivity.class));
