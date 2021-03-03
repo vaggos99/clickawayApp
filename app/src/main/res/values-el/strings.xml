@@ -36,4 +36,5 @@
     <string name="type">Κατηγορία:</string>
     <string name="a">Προσθήκη</string>
     <string name="phone">τηλέφωνο</string>
+    <string name="date">Ημερομηνία</string>
 </resources>

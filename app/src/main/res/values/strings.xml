@@ -35,5 +35,5 @@
     <string name="type">Type:</string>
     <string name="a">Add</string>
     <string name="phone">phone</string>
-
+    <string name="date">date</string>
 </resources>

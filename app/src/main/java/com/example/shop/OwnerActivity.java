@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +21,7 @@ public class OwnerActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    EditText message;
+    EditText message,uid,date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,8 @@ public class OwnerActivity extends AppCompatActivity {
         myRef = database.getReference("message");
         mAuth = FirebaseAuth.getInstance();
         message=findViewById(R.id.editTextTextMultiLine);
-
+        uid=findViewById(R.id.uidText);
+        date=findViewById(R.id.dateText);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -42,7 +44,18 @@ public class OwnerActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void orderTaken(View view)
+    {
+        if(uid.getText().toString()!=null && date.getText().toString()!=null) {
+            myRef = database.getReference("Orders").child(uid.getText().toString()).child(date.getText().toString()).child("Taken");
+            myRef.setValue("true");
+            Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
+            uid.setText("");
+            date.setText("");
+        }
+        else
+            Toast.makeText(getApplicationContext(), "You have to put UID and date of order", Toast.LENGTH_LONG).show();
+    }
     public void edit(View view)
     {
         startActivity(new Intent(getApplicationContext(), EditInfoActivity.class));
@@ -75,10 +88,10 @@ public class OwnerActivity extends AppCompatActivity {
                         if (!taken) {
                             String date = dataSnapshot.getKey();
                             DataSnapshot name = dataSnapshot.child("Name");
-
+                            DataSnapshot phone = dataSnapshot.child("phone");
                             builder.append("Date:").append(date).append("\n");
                             builder.append("Name:").append(name.getValue(String.class)).append("\n\n");
-
+                            builder.append("Phone:").append(phone.getValue(String.class)).append("\n");
                             for (DataSnapshot s : dataSnapshot.getChildren()) {
 
                                 String item = s.getKey();

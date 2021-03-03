@@ -145,7 +145,7 @@ public class CartActivity extends AppCompatActivity {
         total.setText(String.valueOf(productprice) + String.valueOf("$"));
         m.remove(position);
         Order order=orderList.get(position);
-        rest_amount.put(order.getProductId(),rest_amount.get(order.getProductId())-Integer.parseInt(order.getAmount()));
+        rest_amount.put(order.getProductId(),rest_amount.get(order.getProductId())+Integer.parseInt(order.getAmount()));
         orderList.remove(position);
         adapter.notifyDataSetChanged();
     }

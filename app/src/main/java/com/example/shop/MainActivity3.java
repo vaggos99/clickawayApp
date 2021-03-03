@@ -267,11 +267,12 @@ else
 
                                 String date=dataSnapshot.getKey();
                                 DataSnapshot name = dataSnapshot.child("Name");
+                                DataSnapshot phone = dataSnapshot.child("Phone");
 
                                 builder_s.append("Date:").append(date).append("\n");
                                 builder_s.append("Name:").append(name.getValue(String.class)).append("\n");
-
-
+                                builder_s.append("UID:").append(user.getUid()).append("\n");
+                                builder_s.append("Phone:").append(phone.getValue(String.class)).append("\n");
                                 for (DataSnapshot s : dataSnapshot.getChildren()) {
 
                                     String item=s.getKey();
