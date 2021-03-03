@@ -106,15 +106,17 @@ public class OwnerActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 StringBuilder builder = new StringBuilder();
                 for (DataSnapshot datasnap : snapshot.getChildren()) {
+                    String uid=datasnap.getKey();
                     for (DataSnapshot dataSnapshot : datasnap.getChildren()) {
                         boolean taken = Boolean.parseBoolean((String) dataSnapshot.child("Taken").getValue());
                         if (!taken) {
                             String date = dataSnapshot.getKey();
                             DataSnapshot name = dataSnapshot.child("Name");
-                            DataSnapshot phone = dataSnapshot.child("phone");
+                            DataSnapshot phone = dataSnapshot.child("Phone");
                             builder.append("Date:").append(date).append("\n");
-                            builder.append("Name:").append(name.getValue(String.class)).append("\n\n");
-                            builder.append("Phone:").append(phone.getValue(String.class)).append("\n");
+                            builder.append("UID:").append(uid).append("\n");
+                            builder.append("Name:").append(name.getValue(String.class)).append("\n");
+                            builder.append("Phone:").append(phone.getValue(String.class)).append("\n\n");
                             for (DataSnapshot s : dataSnapshot.getChildren()) {
 
                                 String item = s.getKey();
