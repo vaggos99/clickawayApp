@@ -1,6 +1,7 @@
 package com.example.shop;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore store;
     DatabaseReference myRef;
     FirebaseDatabase database;
+    private static final int REC_RESULT = 653;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,5 +144,58 @@ public class LoginActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+    public void loggin(View view)
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Please say something!");
+        startActivityForResult(intent,REC_RESULT);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REC_RESULT && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches.contains("login") || matches.contains("σύνδεση"))
+            {
+                String e = email.getText().toString();
+                String p = password.getText().toString();
+
+                if (e.isEmpty() || e == null) {
+                    email.setError("Email is required!");
+                    return;
+                }
+
+
+                if (p.length() < 6) {
+                    password.setError("Password must be at least 6 characters!");
+                    return;
+                }
+                bar.setVisibility(View.VISIBLE);
+
+                auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            String user_id = auth.getCurrentUser().getUid();
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("id", user_id);
+                            editor.apply();
+                            check(user_id);
+                            // Toast.makeText(LoginActivity.this, "Login Successfully" , Toast.LENGTH_SHORT).show();
+                            // startActivity(new Intent(getApplicationContext(), MainActivity3.class));
+                            // finish();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            bar.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+            }
+        }
 
 }

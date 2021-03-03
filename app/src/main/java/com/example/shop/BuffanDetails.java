@@ -1,5 +1,6 @@
 package com.example.shop;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,6 +48,7 @@ public class BuffanDetails extends AppCompatActivity {
     private Order order;
     private ArrayList<Order> orderList=null;
     private Map<String, Integer> rest_amount ;
+    private static final int REC_RESULT = 653;
 
 
     @Override
@@ -147,4 +150,52 @@ public class BuffanDetails extends AppCompatActivity {
             am.setText(a);
         }
     }
+
+    public void add(View view)
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Please say something!");
+        startActivityForResult(intent,REC_RESULT);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REC_RESULT && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches.contains("add") || matches.contains("προσθήκη"))
+            {
+                String amount = am.getText().toString();
+                if(amount=="0")
+                {
+                    Toast.makeText(BuffanDetails.this,"Select amount",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    int total_amount;
+                    if (rest_amount.containsKey(id)) {
+                        total_amount = rest_amount.get(id);
+                    } else
+                        total_amount = Integer.parseInt(mamount);
+                    int price = Integer.parseInt(mprice.substring(0, mprice.length() - 1)) * count;
+                    //Intent intent = getIntent();
+                    //String uid=intent.getStringExtra("id");
+                    //Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
+                    total_amount = total_amount - Integer.parseInt((String) am.getText());
+                    rest_amount.put(id, total_amount);
+                    order.setAmount((String) am.getText());
+                    order.setPrice(String.valueOf(price));
+                    order.setTitle(mtitle);
+                    order.setProductId(id);
+                    Intent intent2 = new Intent(getApplicationContext(), MainActivity3.class);
+                    Bundle bundle = new Bundle();
+                    orderList.add(order);
+
+                    bundle.putParcelableArrayList("orderlist", orderList);
+                    intent2.putExtras(bundle);
+                    intent2.putExtra("amountHash", (Serializable) rest_amount);
+                    startActivity(intent2);
+                }
+            }
+            }
+        }
 }
