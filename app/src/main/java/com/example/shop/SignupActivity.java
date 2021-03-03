@@ -55,75 +55,64 @@ public class SignupActivity extends AppCompatActivity {
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
-    public void register(View view)
-    {
+    public void register(View view) {
         String e = email.getText().toString();
         String p = password.getText().toString();
 
-        if(e.isEmpty() || e==null )
-        {
-            Toast.makeText(SignupActivity.this,"Name is required",Toast.LENGTH_SHORT).show();
-        }
-
-        if(e.isEmpty() || e==null )
-        {
+        if (e.isEmpty() || e == null) {
+            Toast.makeText(SignupActivity.this, "Name is required", Toast.LENGTH_SHORT).show();
+        } else if (e.isEmpty() || e == null) {
             email.setError("Email is required!");
             return;
-        }
-
-        if(p.length() < 6)
-        {
+        } else if (p.length() < 6) {
             password.setError("Password must be at least 6 characters!");
             return;
+        } else if (owner.isChecked() == false && user.isChecked() == false) {
+            Toast.makeText(SignupActivity.this, "You must select the type", Toast.LENGTH_SHORT).show();
+        } else {
+            bar.setVisibility(View.VISIBLE);
+
+
+            auth.createUserWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    FirebaseUser usr = auth.getCurrentUser();
+                    if (task.isSuccessful()) {
+
+                        String n = nm.getText().toString();
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("name", n);
+                        editor.apply();
+                        if (owner.isChecked()) {
+                            DocumentReference r = store.collection("Users").document(usr.getUid());
+                            Map<String, Object> userType = new HashMap<>();
+                            userType.put("Type", owner.getText().toString());
+                            r.set(userType);
+                            Toast.makeText(SignupActivity.this, "User Created!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+                        } else if (user.isChecked()) {
+                            DocumentReference r = store.collection("Users").document(usr.getUid());
+                            Map<String, Object> userType = new HashMap<>();
+                            userType.put("Type", user.getText().toString());
+                            r.set(userType);
+                            Toast.makeText(SignupActivity.this, "User Created!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+
+                        }
+
+
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        bar.setVisibility(View.INVISIBLE);
+                    }
+
+                }
+            });
+
         }
-        bar.setVisibility(View.VISIBLE);
-
-
-        auth.createUserWithEmailAndPassword(e,p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                FirebaseUser usr = auth.getCurrentUser();
-                if(task.isSuccessful())
-                {
-
-                    String n = nm.getText().toString();
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("name", n);
-                    editor.apply();
-                    if(owner.isChecked())
-                    {
-                        DocumentReference r = store.collection("Users").document(usr.getUid());
-                        Map<String,Object> userType = new HashMap<>();
-                        userType.put("Type",owner.getText().toString());
-                        r.set(userType);
-                        Toast.makeText(SignupActivity.this,"User Created!",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        finish();
-                    }
-                    else if(user.isChecked())
-                    {
-                        DocumentReference r = store.collection("Users").document(usr.getUid());
-                        Map<String,Object> userType = new HashMap<>();
-                        userType.put("Type",user.getText().toString());
-                        r.set(userType);
-                        Toast.makeText(SignupActivity.this,"User Created!",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        finish();
-
-                    }
-                    else Toast.makeText(SignupActivity.this,"You must select the type",Toast.LENGTH_SHORT);
-
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(),
-                            task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                    bar.setVisibility(View.INVISIBLE);
-                }
-
-            }
-        });
-
     }
 
     // //Αν πατησει στο textView Login here τοτε μεταφερεται στο MainActivity2 και κλεινει αυτο το activity

@@ -73,10 +73,10 @@ public class BuffanDetails extends AppCompatActivity {
         rest_amount= (Map<String, Integer>) getIntent().getSerializableExtra("amountHash");
         title.setText(mtitle);
         price.setText(mprice);
-        if (rest_amount.containsKey(id)){
-            posot.setText(rest_amount.get(id).toString());
-        }
-        else
+     //   if (rest_amount.containsKey(id)){
+      //      posot.setText(rest_amount.get(id).toString());
+      //  }
+      //  else
             posot.setText(mamount);
 
 
